@@ -1,6 +1,6 @@
 # Azure Locust
 
-Run distributed Locust load tests on _Azure Container Instances_. It's quick, cheap and scalable! Using 20 slaves you can achive ~12 000 req/s!
+Run distributed [Locust](https://locust.io/) load tests on _Azure Container Instances_. It's quick, cheap and scalable! Using 20 slaves you can achive ~12 000 req/s!
 
 ![Locust Diagram](docs/locust-diagram.png)
 
@@ -90,3 +90,9 @@ az container list --resource-group ${NAMESPACE} --query '[].name' -o tsv | xargs
 ```
 az group delete --name ${NAMESPACE} --yes
 ```
+
+## Disclaimer
+
+* Load test affects target service performance. Never run load tests without service owner permission!
+* Some services can block traffic from generator - you should whitelist Azure Region IPs ([Download Prefixes](https://www.microsoft.com/download/details.aspx?id=56519)).
+* After load tests cleanup Azure resources. You will be billed for running Azure Contianers Instance and Storage Account usage. You can check cost of ACI [here](https://azure.microsoft.com/en-us/pricing/details/container-instances/).
