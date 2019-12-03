@@ -1,5 +1,9 @@
 # Azure Locust
 
+Run distributed Locust load tests on _Azure Container Instances_. It's quick, cheap and scalable! Using 20 slaves you can achive ~12 000 req/s!
+
+![Locust Diagram](docs/locust-diagram.png)
+
 Before you start choose some namespace for identity your resources. 
 It will be helful if you works on shared subscription and names have to be unique (ex. Storage Account and Resource Group)
 It will be called **Namespace** and append to all resources you create. 
