@@ -4,14 +4,21 @@ Run distributed Locust load tests on _Azure Container Instances_. It's quick, ch
 
 ![Locust Diagram](docs/locust-diagram.png)
 
-Before you start choose some namespace for identity your resources. 
+#### Before you start
+Choose some namespace for identity your resources. 
 It will be helful if you works on shared subscription and names have to be unique (ex. Storage Account and Resource Group)
 It will be called **Namespace** and append to all resources you create. 
 Please use only lowercase and digits. 
 
 **Example namespace:** *maciejlocust*
 
-## Azure Portal
+You can deploy and manage resources using both: 
+* [Azure Portal](https://portal.azure.com) - easier
+* [Azure Cli](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli?view=azure-cli-latest) - faster 
+
+## Deployment
+
+### Azure Portal
 
 Click magick button:
 
@@ -24,7 +31,7 @@ Click magick button:
 
 ![Custom Deployment](docs/custom-deployment.png)
 
-## Azure Cli
+### Azure Cli
 
 **Step 1:** Choose your namespace
 ```
@@ -42,7 +49,7 @@ az group deployment create --resource-group ${NAMESPACE} --template-file azurede
 ```
 if you want more instance append `--parameters instances=N`
 
-## Go to  dashboard
+## Go to dashboard
 
 When deployment completes, your load generator is ready. Go to `<Namespace>-master.westeurope.azurecontainer.io:8089`
 
@@ -62,9 +69,12 @@ Then reset all containers called *master* and *slave*.
 ![Acis](docs/locust-acis.png)
 ![Reset](docs/locust-reset.png)
 
-**Azure Cli:** Upload your custom scriptfile and restart instances: You can change `--source` param if you want use different .py file.
+**Azure Cli:** Upload your custom script (you can change `--source` param if you want use different .py file):
 ```
 az storage file upload --account-name ${NAMESPACE} -s scripts --source locustfile.py --path locustfile.py
+```
+Then reset containers:
+```
 az container list --resource-group ${NAMESPACE} --query '[].name' -o tsv | xargs -I {} az container restart --no-wait --resource-group ${NAMESPACE} --name {} 
 ```
 
