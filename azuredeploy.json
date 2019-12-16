@@ -12,7 +12,7 @@
     "namespace": {
       "type": "string",
       "metadata": {
-        "description": "Name of DNS, Storage Account (if empty Resource Group name will be used). Please use only lower case and digits. Max 11 chars."
+        "description": "OPTIONAL: Name of DNS and Storage Account. Please use only lower case and digits. Max 11 chars. If empty Resource Group name will be used."
       },
       "defaultValue": ""
     }
