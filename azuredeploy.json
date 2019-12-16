@@ -8,19 +8,27 @@
         "description": "Number of slaves"
       },
       "defaultValue": 3
+    },
+    "namespace": {
+      "type": "string",
+      "metadata": {
+        "description": "Name of DNS, Storage Account (if empty Resource Group name will be used). Please use only lower case and digits. Max 11 chars."
+      },
+      "defaultValue": ""
     }
   },
   "variables": {
     "location": "[resourceGroup().location]",
+    "namespace": "[if(empty(parameters('namespace')), resourceGroup().name, parameters('namespace'))]",
     "image": "microsoft/azure-cli",
-    "storageAccountName": "[resourceGroup().name]",
+    "storageAccountName": "[variables('namespace')]",
     "containerProvisionerName": "[concat(variables('storageAccountName'), '-provisioner')]",
     "containerName": "createshare",
-    "containerDns": "[concat(resourceGroup().name,'-master')]",
-    "containerMasterGroup": "[concat(resourceGroup().name,'-master')]",
+    "containerDns": "[concat(variables('storageAccountName'),'-master')]",
+    "containerMasterGroup": "[concat(variables('storageAccountName'),'-master')]",
     "containerMasterName": "master",
     "containerMasterImage": "locustio/locust",
-    "containerSlaveGroup": "[concat(resourceGroup().name,'-slave')]",
+    "containerSlaveGroup": "[concat(variables('storageAccountName'),'-slave')]",
     "containerSlaveName": "slave",
     "containerSlaveImage": "locustio/locust",
     "containerMasterAddress": "[concat(variables('containerDns'), '.', resourceGroup().location, '.azurecontainer.io')]",
@@ -162,7 +170,7 @@
             "name": "filesharevolume",
             "azureFile": {
               "shareName": "scripts",
-              "storageAccountName": "[resourceGroup().name]",
+              "storageAccountName": "[variables('storageAccountName')]",
               "storageAccountKey": "[listKeys(variables('storageAccountId'),'2017-10-01').keys[0].value]"
             }
           }
@@ -226,7 +234,7 @@
             "name": "filesharevolume",
             "azureFile": {
               "shareName": "scripts",
-              "storageAccountName": "[resourceGroup().name]",
+              "storageAccountName": "[variables('storageAccountName')]",
               "storageAccountKey": "[listKeys(variables('storageAccountId'),'2017-10-01').keys[0].value]"
             }
           }
