@@ -36,6 +36,8 @@ Click magick button:
 
 ![Custom Deployment](docs/custom-deployment.png)
 
+Click **Purchase** and wait for deployment ends.
+
 ### Azure Cli
 
 Login and set subscription context
