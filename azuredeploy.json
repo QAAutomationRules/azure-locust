@@ -9,26 +9,26 @@
       },
       "defaultValue": 3
     },
-    "namespace": {
+    "prefix": {
       "type": "string",
       "metadata": {
-        "description": "OPTIONAL: Name of DNS and Storage Account. Please use only lower case and digits. Max 11 chars. If empty Resource Group name will be used."
+        "description": "OPTIONAL: Please use only lower case and digits. Max 11 chars. If empty Resource Group name will be used."
       },
       "defaultValue": ""
     }
   },
   "variables": {
     "location": "[resourceGroup().location]",
-    "namespace": "[if(empty(parameters('namespace')), resourceGroup().name, parameters('namespace'))]",
+    "prefix": "[if(empty(parameters('prefix')), resourceGroup().name, parameters('prefix'))]",
     "image": "microsoft/azure-cli",
-    "storageAccountName": "[variables('namespace')]",
+    "storageAccountName": "[variables('prefix')]",
     "containerProvisionerName": "[concat(variables('storageAccountName'), '-provisioner')]",
     "containerName": "createshare",
-    "containerDns": "[concat(variables('storageAccountName'),'-master')]",
-    "containerMasterGroup": "[concat(variables('storageAccountName'),'-master')]",
+    "containerDns": "[concat(variables('prefix'),'-master')]",
+    "containerMasterGroup": "[concat(variables('prefix'),'-master')]",
     "containerMasterName": "master",
     "containerMasterImage": "locustio/locust",
-    "containerSlaveGroup": "[concat(variables('storageAccountName'),'-slave')]",
+    "containerSlaveGroup": "[concat(variables('prefix'),'-slave')]",
     "containerSlaveName": "slave",
     "containerSlaveImage": "locustio/locust",
     "containerMasterAddress": "[concat(variables('containerDns'), '.', resourceGroup().location, '.azurecontainer.io')]",
